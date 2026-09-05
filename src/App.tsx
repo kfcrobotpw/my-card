@@ -54,7 +54,6 @@ export default function App() {
     } catch {
       // ignore
     }
-    showToast(translations[newLang].langChanged);
   };
 
   const t = translations[language];
