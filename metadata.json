@@ -1,0 +1,7 @@
+{
+  "name": "로봇 파일럿 디지털 ID 카드",
+  "description": "로봇 파일럿 장원우의 3D 양면 디지털 프로필 ID 카드 및 실물 출입증 패스 앱",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
