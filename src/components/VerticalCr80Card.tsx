@@ -82,7 +82,10 @@ export default function VerticalCr80Card({
       <div
         id="cr80-card-container"
         className="w-full h-[580px] sm:h-[610px] perspective-1200 cursor-pointer group"
-        onClick={onFlip}
+        onClick={(e) => {
+          e.stopPropagation();
+          onFlip();
+        }}
         role="button"
         tabIndex={0}
         aria-label="로봇 파일럿 디지털 ID 라이선스 카드. 클릭하여 앞뒷면을 뒤집습니다."
@@ -303,7 +306,6 @@ export default function VerticalCr80Card({
           {/* ========================================= */}
           <section
             id="cr80-card-back"
-            onClick={(e) => e.stopPropagation()}
             className={`rotate-y-180 absolute inset-0 backface-hidden rounded-[1.75rem] bg-gradient-to-b from-[#0d1930] to-[#070e1c] border-[1.5px] border-teal-400/40 p-5 sm:p-6 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-300 ${
               isFlipped ? 'pointer-events-auto z-20 opacity-100 visible' : 'pointer-events-none opacity-0 invisible'
             }`}

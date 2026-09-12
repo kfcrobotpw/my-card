@@ -71,7 +71,10 @@ export default function HorizontalCard({
     <div
       id="horizontal-card-container"
       className="perspective-1200 w-full max-w-[620px] aspect-[85.6/53.98] min-h-[260px] max-h-[82vh] cursor-pointer group select-none relative"
-      onClick={onFlip}
+      onClick={(e) => {
+        e.stopPropagation();
+        onFlip();
+      }}
       role="button"
       tabIndex={0}
       aria-label={lang === 'en' ? 'Robot Pilot Digital ID Card. Tap to flip.' : '로봇 파일럿 디지털 ID 카드. 터치하여 앞뒤를 뒤집습니다.'}
@@ -247,7 +250,7 @@ export default function HorizontalCard({
             </div>
 
             {/* Channels & Action Buttons */}
-            <div className="flex flex-col gap-1.5 sm:gap-2 mt-1" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-col gap-1.5 sm:gap-2 mt-1">
               <span className="text-[9px] font-mono-code text-slate-400 tracking-wider uppercase">
                 {t.channelsLabel}
               </span>
@@ -257,7 +260,10 @@ export default function HorizontalCard({
                 {student.links.youtube && (
                   <button
                     type="button"
-                    onClick={() => openChannelQr('youtube')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openChannelQr('youtube');
+                    }}
                     className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-xs font-mono-code transition border cursor-pointer ${
                       selectedChannel === 'youtube'
                         ? 'bg-red-500/20 border-red-500 text-red-300 font-bold shadow-[0_0_12px_rgba(239,68,68,0.3)]'
@@ -273,7 +279,10 @@ export default function HorizontalCard({
                 {student.links.portfolio && (
                   <button
                     type="button"
-                    onClick={() => openChannelQr('portfolio')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openChannelQr('portfolio');
+                    }}
                     className={`flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-xs font-mono-code transition border cursor-pointer ${
                       selectedChannel === 'portfolio'
                         ? 'bg-teal-500/20 border-teal-400 text-teal-300 font-bold shadow-[0_0_12px_rgba(0,229,192,0.3)]'
@@ -293,6 +302,7 @@ export default function HorizontalCard({
                     href={activeQrTarget}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center gap-1 text-[11px] font-mono-code text-teal-300 hover:text-teal-200 transition underline underline-offset-2"
                   >
                     <span>{t.openInNewTab}</span>

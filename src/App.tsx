@@ -354,7 +354,10 @@ export default function App() {
 
   // Main screen: Pure digital ID card with ESC logout handling
   return (
-    <div className="min-h-screen bg-[#040810] text-slate-100 font-sans flex flex-col items-center justify-center p-3 sm:p-6 circuit-bg relative overflow-x-hidden selection:bg-teal-500 selection:text-slate-950">
+    <div
+      className="min-h-screen bg-[#040810] text-slate-100 font-sans flex flex-col items-center justify-center p-3 sm:p-6 circuit-bg relative overflow-x-hidden selection:bg-teal-500 selection:text-slate-950 cursor-pointer"
+      onClick={() => setIsFlipped((prev) => !prev)}
+    >
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[450px] bg-teal-950/20 rounded-full blur-[140px]" />
@@ -362,7 +365,10 @@ export default function App() {
       </div>
 
       {/* Top Header: Language Selector */}
-      <header className="fixed top-2.5 right-2.5 sm:top-4 sm:right-6 z-50">
+      <header
+        className="fixed top-2.5 right-2.5 sm:top-4 sm:right-6 z-50 cursor-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         <LanguageToggle
           currentLang={language}
           onLanguageChange={handleLanguageChange}
@@ -373,7 +379,8 @@ export default function App() {
       {isAdminLoggedIn && (
         <aside
           aria-label="관리자 로그인 상태 알림"
-          className="fixed top-2 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-xl animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto"
+          onClick={(e) => e.stopPropagation()}
+          className="fixed top-2 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-xl animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto cursor-auto"
         >
           <div className="px-4 py-2 rounded-2xl bg-[#09152a]/95 backdrop-blur-md border border-teal-400/60 shadow-[0_0_25px_rgba(0,229,192,0.22)] flex items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -448,7 +455,10 @@ export default function App() {
 
         {/* Discreet HUD Admin info & ESC Logout status */}
         {isAdminLoggedIn && (
-          <div className="mt-3 flex items-center justify-center gap-2">
+          <div
+            className="mt-3 flex items-center justify-center gap-2 cursor-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               onClick={() => navigateTo('/admin')}
