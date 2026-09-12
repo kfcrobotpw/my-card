@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { X, QrCode } from 'lucide-react';
+import CrispQrCode from './CrispQrCode';
 import { Language } from '../types';
 import { translations } from '../translations';
 
@@ -136,14 +136,13 @@ export default function QrCodeModal({
           <span className={`absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-2 border-l-2 rounded-bl pointer-events-none ${iconType === 'youtube' ? 'border-red-500' : 'border-teal-400'}`} />
           <span className={`absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-2 border-r-2 rounded-br pointer-events-none ${iconType === 'youtube' ? 'border-red-500' : 'border-teal-400'}`} />
 
-          <QRCodeSVG
+          <CrispQrCode
             value={url}
             size={210}
             bgColor="#ffffff"
             fgColor="#000000"
             level="M"
             includeMargin={true}
-            style={{ shapeRendering: 'crispEdges' }}
           />
         </div>
 

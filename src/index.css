@@ -42,8 +42,8 @@
 }
 
 .rotate-y-180 {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
+  -webkit-transform: rotateY(180deg) translateZ(1px);
 }
 
 /* High-Contrast Mobile-Optimized QR Code Container */
@@ -56,14 +56,26 @@
   isolation: isolate !important;
   filter: none !important;
   -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
   transform: translateZ(1px);
   -webkit-transform: translateZ(1px);
-  image-rendering: pixelated;
+}
+
+.qr-contrast-box img,
+.qr-contrast-box canvas {
+  display: block !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  background-color: #ffffff !important;
+  image-rendering: auto !important;
 }
 
 .qr-contrast-box svg {
-  shape-rendering: crispEdges !important;
-  -webkit-shape-rendering: crispEdges !important;
+  shape-rendering: geometricPrecision !important;
+  -webkit-shape-rendering: geometricPrecision !important;
   color-scheme: light !important;
   forced-color-adjust: none !important;
   filter: none !important;

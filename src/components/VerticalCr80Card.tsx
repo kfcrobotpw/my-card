@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import { QrCode, Maximize2 } from 'lucide-react';
+import CrispQrCode from './CrispQrCode';
 import { Language, StudentData } from '../types';
 import { translations } from '../translations';
 import QrCodeModal from './QrCodeModal';
@@ -531,19 +531,19 @@ export default function VerticalCr80Card({
                 title={lang === 'en' ? 'Click to open high-res QR code' : '클릭하여 고해상도 QR 코드 열기'}
               >
                 {/* High contrast QR box with corner accents */}
-                <div className={`p-1.5 bg-white qr-contrast-box rounded-xl shadow-md shrink-0 w-[76px] h-[76px] flex items-center justify-center relative overflow-hidden ring-2 transition group-hover:scale-105 ${
+                <div className={`p-1 bg-white qr-contrast-box rounded-xl shadow-md shrink-0 w-[78px] h-[78px] flex items-center justify-center relative overflow-hidden ring-2 transition group-hover:scale-105 ${
                   selectedChannel === 'youtube'
                     ? 'ring-red-500/80 group-hover:ring-red-400'
                     : 'ring-teal-400/80 group-hover:ring-teal-300'
                 }`}>
                   {activeQrTarget ? (
-                    <QRCodeSVG
+                    <CrispQrCode
                       value={activeQrTarget}
-                      size={66}
+                      size={70}
                       bgColor="#ffffff"
                       fgColor="#000000"
                       level="M"
-                      style={{ shapeRendering: 'crispEdges' }}
+                      includeMargin={true}
                     />
                   ) : (
                     <div className="w-full h-full bg-slate-800 flex flex-col items-center justify-center text-center p-1">

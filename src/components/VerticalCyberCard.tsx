@@ -1,4 +1,4 @@
-import { QRCodeSVG } from 'qrcode.react';
+import CrispQrCode from './CrispQrCode';
 import { Bot, CheckCircle2 } from 'lucide-react';
 import { StudentData } from '../types';
 
@@ -252,13 +252,13 @@ export default function VerticalCyberCard({ student, isFlipped, onFlip, showFall
             <div className="flex items-center gap-3">
               <div className="p-1 bg-white qr-contrast-box rounded-lg shadow-md shrink-0 w-[66px] h-[66px] flex items-center justify-center relative overflow-hidden">
                 {activeQrTarget ? (
-                  <QRCodeSVG
+                  <CrispQrCode
                     value={activeQrTarget}
                     size={58}
                     bgColor="#ffffff"
                     fgColor="#000000"
                     level="M"
-                    style={{ shapeRendering: 'crispEdges' }}
+                    includeMargin={true}
                   />
                 ) : (
                   <div className="w-full h-full bg-slate-800 flex flex-col items-center justify-center text-center p-1">
