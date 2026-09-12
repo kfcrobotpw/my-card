@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "로봇 파일럿 디지털 ID 카드",
+  "short_name": "로봇 ID",
+  "description": "로봇 파일럿 장원우의 3D 양면 디지털 프로필 ID 카드 및 실물 출입증 패스 앱",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#040810",
+  "theme_color": "#040810",
+  "icons": [
+    {
+      "src": "/robot_pilot_avatar.jpg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

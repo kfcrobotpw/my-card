@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { Settings, X } from 'lucide-react';
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { Maximize, Minimize, Settings, X } from 'lucide-react';
 import VerticalCr80Card from './components/VerticalCr80Card';
 import HorizontalCard from './components/HorizontalCard';
 import AdminPage from './components/AdminPage';
@@ -111,6 +111,95 @@ export default function App() {
     url: string;
     iconType?: 'youtube' | 'portfolio' | 'default';
   } | null>(null);
+
+  // Mobile & Desktop Fullscreen Mode State
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(() => {
+    if (typeof document === 'undefined') return false;
+    const doc = document as any;
+    return !!(
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.mozFullScreenElement ||
+      doc.msFullscreenElement
+    );
+  });
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const doc = document as any;
+      const isFs = !!(
+        doc.fullscreenElement ||
+        doc.webkitFullscreenElement ||
+        doc.mozFullScreenElement ||
+        doc.msFullscreenElement
+      );
+      setIsFullscreen(isFs);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
+  const handleToggleFullscreen = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    try {
+      const doc = document as any;
+      const docEl = document.documentElement as any;
+
+      const isFs = !!(
+        doc.fullscreenElement ||
+        doc.webkitFullscreenElement ||
+        doc.mozFullScreenElement ||
+        doc.msFullscreenElement
+      );
+
+      if (!isFs) {
+        if (docEl.requestFullscreen) {
+          await docEl.requestFullscreen();
+        } else if (docEl.webkitRequestFullscreen) {
+          await docEl.webkitRequestFullscreen();
+        } else if (docEl.mozRequestFullScreen) {
+          await docEl.mozRequestFullScreen();
+        } else if (docEl.msRequestFullscreen) {
+          await docEl.msRequestFullscreen();
+        } else {
+          showToast(
+            language === 'ko'
+              ? '아이폰(Safari)은 하단 공유 버튼 [공유] → [홈 화면에 추가]를 누르면 주소창 없는 전체화면으로 실행됩니다.'
+              : 'On iPhone (Safari), tap Share → [Add to Home Screen] to open in full screen mode.'
+          );
+        }
+      } else {
+        if (doc.exitFullscreen) {
+          await doc.exitFullscreen();
+        } else if (doc.webkitExitFullscreen) {
+          await doc.webkitExitFullscreen();
+        } else if (doc.mozCancelFullScreen) {
+          await doc.mozCancelFullScreen();
+        } else if (doc.msExitFullscreen) {
+          await doc.msExitFullscreen();
+        }
+      }
+    } catch (err) {
+      console.warn('Fullscreen request failed:', err);
+      showToast(
+        language === 'ko'
+          ? '브라우저 메뉴에서 [홈 화면에 추가]를 누르면 주소창 없이 전체화면 앱으로 이용할 수 있습니다.'
+          : 'Use [Add to Home Screen] in your browser menu for full screen app experience.'
+      );
+    }
+  };
 
   const showToast = (msg: string) => {
     if (toastTimer) clearTimeout(toastTimer);
@@ -355,7 +444,7 @@ export default function App() {
   // Main screen: Pure digital ID card with ESC logout handling
   return (
     <div
-      className="min-h-screen bg-[#040810] text-slate-100 font-sans flex flex-col items-center justify-center p-3 sm:p-6 circuit-bg relative overflow-x-hidden selection:bg-teal-500 selection:text-slate-950 cursor-pointer"
+      className="min-h-screen min-h-[100dvh] bg-[#040810] text-slate-100 font-sans flex flex-col items-center justify-center p-3 sm:p-6 circuit-bg relative overflow-x-hidden selection:bg-teal-500 selection:text-slate-950 cursor-pointer pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
       onClick={() => setIsFlipped((prev) => !prev)}
     >
       {/* Background Ambient Glows */}
@@ -364,11 +453,29 @@ export default function App() {
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-sky-950/15 rounded-full blur-[120px]" />
       </div>
 
-      {/* Top Header: Language Selector */}
+      {/* Top Header: Fullscreen & Language Controls */}
       <header
-        className="fixed top-2.5 right-2.5 sm:top-4 sm:right-6 z-50 cursor-auto"
+        className="fixed top-2.5 right-2.5 sm:top-4 sm:right-6 z-50 cursor-auto flex items-center gap-2"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Fullscreen Button for Mobile Phone & Desktop */}
+        <button
+          type="button"
+          onClick={handleToggleFullscreen}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#09152a]/90 hover:bg-slate-800 border border-teal-500/40 hover:border-teal-400 text-teal-300 hover:text-teal-200 text-xs font-mono-code transition backdrop-blur-md shadow-sm cursor-pointer active:scale-95"
+          title={isFullscreen ? t.fullscreenExit : t.fullscreenEnter}
+          aria-label={isFullscreen ? t.fullscreenExit : t.fullscreenEnter}
+        >
+          {isFullscreen ? (
+            <Minimize className="w-3.5 h-3.5 text-teal-300" />
+          ) : (
+            <Maximize className="w-3.5 h-3.5 text-teal-300" />
+          )}
+          <span className="text-[11px] font-semibold tracking-tight">
+            {isFullscreen ? t.fullscreenExit : t.fullscreenEnter}
+          </span>
+        </button>
+
         <LanguageToggle
           currentLang={language}
           onLanguageChange={handleLanguageChange}

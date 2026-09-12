@@ -44,6 +44,9 @@ export interface TranslationStrings {
   orientationPortrait: string;
   flipPrompt: string;
   rotatePhonePrompt: string;
+  fullscreenEnter: string;
+  fullscreenExit: string;
+  fullscreenGuide: string;
 }
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -91,6 +94,9 @@ export const translations: Record<Language, TranslationStrings> = {
     orientationPortrait: "세로 카드",
     flipPrompt: "카드를 터치하여 앞/뒷면 뒤집기",
     rotatePhonePrompt: "스마트폰을 가로로 눕히면 가로 카드로 자동 전환됩니다",
+    fullscreenEnter: "전체화면",
+    fullscreenExit: "전체화면 종료",
+    fullscreenGuide: "전체화면 모드로 전환되었습니다.",
   },
   en: {
     cardType: "ROBOT PILOT (WRO 2026)",
@@ -136,5 +142,8 @@ export const translations: Record<Language, TranslationStrings> = {
     orientationPortrait: "Portrait Card",
     flipPrompt: "Tap card to flip front/back",
     rotatePhonePrompt: "Rotate phone horizontally for landscape card",
+    fullscreenEnter: "Full Screen",
+    fullscreenExit: "Exit Full Screen",
+    fullscreenGuide: "Full screen mode activated.",
   },
 };
