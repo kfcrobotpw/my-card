@@ -39,6 +39,11 @@ export interface TranslationStrings {
   logoutButton: string;
   langChanged: string;
   noLinks: string;
+  orientationAuto: string;
+  orientationLandscape: string;
+  orientationPortrait: string;
+  flipPrompt: string;
+  rotatePhonePrompt: string;
 }
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -81,6 +86,11 @@ export const translations: Record<Language, TranslationStrings> = {
     logoutButton: "[ESC] 로그아웃",
     langChanged: "한국어로 변경되었습니다.",
     noLinks: "등록된 활동 링크가 없습니다.",
+    orientationAuto: "자동 회전",
+    orientationLandscape: "가로 카드",
+    orientationPortrait: "세로 카드",
+    flipPrompt: "카드를 터치하여 앞/뒷면 뒤집기",
+    rotatePhonePrompt: "스마트폰을 가로로 눕히면 가로 카드로 자동 전환됩니다",
   },
   en: {
     cardType: "ROBOT PILOT (WRO 2026)",
@@ -121,5 +131,10 @@ export const translations: Record<Language, TranslationStrings> = {
     logoutButton: "[ESC] Log out",
     langChanged: "Language changed to English.",
     noLinks: "No activity links registered.",
+    orientationAuto: "Auto Rotate",
+    orientationLandscape: "Landscape Card",
+    orientationPortrait: "Portrait Card",
+    flipPrompt: "Tap card to flip front/back",
+    rotatePhonePrompt: "Rotate phone horizontally for landscape card",
   },
 };

@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Settings, X } from 'lucide-react';
 import VerticalCr80Card from './components/VerticalCr80Card';
+import HorizontalCard from './components/HorizontalCard';
 import AdminPage from './components/AdminPage';
 import Toast from './components/Toast';
 import QrCodeModal from './components/QrCodeModal';
@@ -76,6 +77,19 @@ export default function App() {
 
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
+  // Screen Orientation State for Mobile (Always auto-detected from device rotation)
+  const [deviceIsLandscape, setDeviceIsLandscape] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    if (window.screen?.orientation?.type) {
+      return window.screen.orientation.type.includes('landscape');
+    }
+    return window.innerWidth > window.innerHeight;
+  });
+
+  // Always automatically adapt card view to device orientation:
+  // Phone held vertically -> Portrait card, Phone held horizontally -> Landscape card
+  const isCardLandscape = deviceIsLandscape;
+
   // Command prompt input state (appears when pressing '/' or typing command)
   const [showCommandPrompt, setShowCommandPrompt] = useState<boolean>(false);
   const [commandInput, setCommandInput] = useState<string>('');
@@ -135,6 +149,60 @@ export default function App() {
     setIsAdminLoggedIn(false);
     showToast(language === 'ko' ? '관리자 계정에서 로그아웃되었습니다.' : 'Logged out from administrator account.');
   };
+
+  // Device orientation detection listener for smartphones & tablets
+  useEffect(() => {
+    const checkOrientation = () => {
+      let isLandscape = false;
+      if (typeof window === 'undefined') return;
+
+      if (window.screen?.orientation?.type) {
+        isLandscape = window.screen.orientation.type.includes('landscape');
+      } else if (typeof window.orientation !== 'undefined') {
+        // Fallback for older iOS Safari
+        isLandscape = Math.abs(Number(window.orientation)) === 90;
+      } else {
+        // Fallback to window dimensions
+        isLandscape = window.innerWidth > window.innerHeight;
+      }
+      setDeviceIsLandscape(isLandscape);
+    };
+
+    checkOrientation();
+
+    // Modern screen orientation API
+    if (window.screen?.orientation) {
+      window.screen.orientation.addEventListener('change', checkOrientation);
+    }
+
+    // Window resize & orientation events
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+
+    // CSS matchMedia orientation listener
+    const mql = window.matchMedia('(orientation: landscape)');
+    const handleMqlChange = (e: MediaQueryListEvent) => {
+      setDeviceIsLandscape(e.matches);
+    };
+    try {
+      mql.addEventListener('change', handleMqlChange);
+    } catch {
+      mql.addListener(handleMqlChange);
+    }
+
+    return () => {
+      if (window.screen?.orientation) {
+        window.screen.orientation.removeEventListener('change', checkOrientation);
+      }
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+      try {
+        mql.removeEventListener('change', handleMqlChange);
+      } catch {
+        mql.removeListener(handleMqlChange);
+      }
+    };
+  }, []);
 
   // Keyboard typing detection & URL synchronization & ESC logout
   useEffect(() => {
@@ -293,8 +361,8 @@ export default function App() {
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-sky-950/15 rounded-full blur-[120px]" />
       </div>
 
-      {/* Top Right Fixed Language Selector: 한국어 / English */}
-      <header className="fixed top-3 right-3 sm:top-5 sm:right-6 z-50">
+      {/* Top Header: Language Selector */}
+      <header className="fixed top-2.5 right-2.5 sm:top-4 sm:right-6 z-50">
         <LanguageToggle
           currentLang={language}
           onLanguageChange={handleLanguageChange}
@@ -305,9 +373,9 @@ export default function App() {
       {isAdminLoggedIn && (
         <aside
           aria-label="관리자 로그인 상태 알림"
-          className="fixed top-3 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-xl animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto"
+          className="fixed top-2 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-xl animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto"
         >
-          <div className="px-4 py-2.5 rounded-2xl bg-[#09152a]/95 backdrop-blur-md border border-teal-400/60 shadow-[0_0_25px_rgba(0,229,192,0.22)] flex items-center justify-between gap-3 text-xs">
+          <div className="px-4 py-2 rounded-2xl bg-[#09152a]/95 backdrop-blur-md border border-teal-400/60 shadow-[0_0_25px_rgba(0,229,192,0.22)] flex items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e5c0] opacity-75" />
@@ -350,21 +418,37 @@ export default function App() {
         </aside>
       )}
 
-      {/* The Single Screen Card Stage */}
-      <main className="w-full flex flex-col items-center justify-center py-4 z-10 pt-12 sm:pt-14">
-        <VerticalCr80Card
-          student={student}
-          isFlipped={isFlipped}
-          onFlip={() => setIsFlipped((prev) => !prev)}
-          onAdminTrigger={() => navigateTo('/admin')}
-          isAdminLoggedIn={isAdminLoggedIn}
-          onOpenQrModal={(data) => setQrModal(data)}
-          lang={language}
-        />
+      {/* The Single Screen Card Stage (Adapts dynamically to Portrait & Landscape) */}
+      <main
+        className={`w-full flex flex-col items-center justify-center py-2 z-10 ${
+          isCardLandscape ? 'pt-12 sm:pt-14' : 'pt-14 sm:pt-16'
+        }`}
+      >
+        {isCardLandscape ? (
+          <HorizontalCard
+            student={student}
+            isFlipped={isFlipped}
+            onFlip={() => setIsFlipped((prev) => !prev)}
+            onAdminTrigger={() => navigateTo('/admin')}
+            isAdminLoggedIn={isAdminLoggedIn}
+            onOpenQrModal={(data) => setQrModal(data)}
+            lang={language}
+          />
+        ) : (
+          <VerticalCr80Card
+            student={student}
+            isFlipped={isFlipped}
+            onFlip={() => setIsFlipped((prev) => !prev)}
+            onAdminTrigger={() => navigateTo('/admin')}
+            isAdminLoggedIn={isAdminLoggedIn}
+            onOpenQrModal={(data) => setQrModal(data)}
+            lang={language}
+          />
+        )}
 
         {/* Discreet HUD Admin info & ESC Logout status */}
         {isAdminLoggedIn && (
-          <div className="mt-4 flex items-center justify-center gap-2">
+          <div className="mt-3 flex items-center justify-center gap-2">
             <button
               type="button"
               onClick={() => navigateTo('/admin')}
