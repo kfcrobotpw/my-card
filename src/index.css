@@ -25,19 +25,61 @@
 /* 3D Flip Card Container */
 .perspective-1200 {
   perspective: 1200px;
+  -webkit-perspective: 1200px;
 }
 
 .preserve-3d {
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .backface-hidden {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* High-Contrast Mobile-Optimized QR Code Container */
+.qr-contrast-box {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  color-scheme: light !important;
+  forced-color-adjust: none !important;
+  -webkit-print-color-adjust: exact !important;
+  isolation: isolate !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  transform: translateZ(1px);
+  -webkit-transform: translateZ(1px);
+  image-rendering: pixelated;
+}
+
+.qr-contrast-box svg {
+  shape-rendering: crispEdges !important;
+  -webkit-shape-rendering: crispEdges !important;
+  color-scheme: light !important;
+  forced-color-adjust: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  background-color: #ffffff !important;
+}
+
+.qr-contrast-box svg path[fill="#000000"],
+.qr-contrast-box svg path[fill="#040914"],
+.qr-contrast-box svg path[fill="#060d1a"],
+.qr-contrast-box svg path[fill="#071221"] {
+  fill: #000000 !important;
+}
+
+.qr-contrast-box svg path[fill="#ffffff"] {
+  fill: #ffffff !important;
 }
 
 /* Engineering & Circuit Grids */

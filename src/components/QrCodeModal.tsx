@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { X, QrCode } from 'lucide-react';
 import { Language } from '../types';
 import { translations } from '../translations';
 
@@ -80,10 +81,10 @@ export default function QrCodeModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition cursor-pointer z-20"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer z-20"
           title={t.close + " (Esc)"}
         >
-          ✕
+          <X className="w-4 h-4" />
         </button>
 
         {/* Header Badge */}
@@ -129,7 +130,7 @@ export default function QrCodeModal({
         )}
 
         {/* High-Contrast Large QR Code Container with Corner HUD brackets */}
-        <div className="relative my-3 inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-2xl border-2 border-slate-200">
+        <div className="relative my-3 inline-flex items-center justify-center p-3 sm:p-4 bg-white qr-contrast-box rounded-2xl shadow-2xl border-2 border-slate-200">
           <span className={`absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 rounded-tl pointer-events-none ${iconType === 'youtube' ? 'border-red-500' : 'border-teal-400'}`} />
           <span className={`absolute -top-1.5 -right-1.5 w-4 h-4 border-t-2 border-r-2 rounded-tr pointer-events-none ${iconType === 'youtube' ? 'border-red-500' : 'border-teal-400'}`} />
           <span className={`absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-2 border-l-2 rounded-bl pointer-events-none ${iconType === 'youtube' ? 'border-red-500' : 'border-teal-400'}`} />
@@ -137,11 +138,12 @@ export default function QrCodeModal({
 
           <QRCodeSVG
             value={url}
-            size={200}
+            size={210}
             bgColor="#ffffff"
-            fgColor="#040914"
-            level="H"
-            includeMargin={false}
+            fgColor="#000000"
+            level="M"
+            includeMargin={true}
+            style={{ shapeRendering: 'crispEdges' }}
           />
         </div>
 
@@ -149,7 +151,7 @@ export default function QrCodeModal({
         <div className={`text-xs font-mono-code tracking-wide mb-3 flex items-center justify-center gap-1.5 font-bold ${
           iconType === 'youtube' ? 'text-red-400' : 'text-teal-300'
         }`}>
-          <span>📷</span>
+          <QrCode className="w-3.5 h-3.5" />
           <span>{t.scanWithCamera}</span>
         </div>
 

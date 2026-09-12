@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { QrCode, Maximize2 } from 'lucide-react';
 import { Language, StudentData } from '../types';
 import { translations } from '../translations';
 import QrCodeModal from './QrCodeModal';
@@ -307,8 +308,8 @@ export default function VerticalCr80Card({
               isFlipped ? 'pointer-events-auto z-20 opacity-100 visible' : 'pointer-events-none opacity-0 invisible'
             }`}
           >
-            <div className="absolute inset-0 holographic-sheen pointer-events-none" />
-            <div className="hud-scanner" />
+            <div className="absolute inset-0 holographic-sheen pointer-events-none opacity-20 z-0" />
+            <div className="hud-scanner z-0" />
 
             {/* Top Back: Slot hole & Magnetic Stripe */}
             <div className="-mx-5 sm:-mx-6 -mt-5 sm:-mt-6 relative z-10">
@@ -411,7 +412,7 @@ export default function VerticalCr80Card({
                         title={lang === 'en' ? 'Open YouTube QR code' : 'YouTube 영상 QR 코드 열기'}
                       >
                         <span>QR</span>
-                        <span>📷</span>
+                        <QrCode className="w-3 h-3" />
                       </button>
                       <a
                         href={student.links.youtube}
@@ -487,7 +488,7 @@ export default function VerticalCr80Card({
                         title={lang === 'en' ? 'Open Portfolio QR code' : '포트폴리오 QR 코드 열기'}
                       >
                         <span>QR</span>
-                        <span>📷</span>
+                        <QrCode className="w-3 h-3" />
                       </button>
                       <a
                         href={student.links.portfolio}
@@ -513,7 +514,7 @@ export default function VerticalCr80Card({
 
             {/* Bottom: QR Pass Module */}
             <div
-              className={`p-3 rounded-2xl transition-all border relative z-10 flex items-center justify-between shadow-xl ${
+              className={`p-3 rounded-2xl transition-all border relative z-20 flex items-center justify-between shadow-xl ${
                 selectedChannel === 'youtube'
                   ? 'bg-[#0f1220]/95 border-red-500/60 shadow-[0_0_25px_rgba(239,68,68,0.2)] ring-1 ring-red-500/30'
                   : 'bg-[#071828]/95 border-teal-400/60 shadow-[0_0_25px_rgba(0,229,192,0.2)] ring-1 ring-teal-400/30'
@@ -530,7 +531,7 @@ export default function VerticalCr80Card({
                 title={lang === 'en' ? 'Click to open high-res QR code' : '클릭하여 고해상도 QR 코드 열기'}
               >
                 {/* High contrast QR box with corner accents */}
-                <div className={`p-1.5 bg-white rounded-xl shadow-md shrink-0 w-[74px] h-[74px] flex items-center justify-center relative overflow-hidden ring-2 transition group-hover:scale-105 ${
+                <div className={`p-1.5 bg-white qr-contrast-box rounded-xl shadow-md shrink-0 w-[76px] h-[76px] flex items-center justify-center relative overflow-hidden ring-2 transition group-hover:scale-105 ${
                   selectedChannel === 'youtube'
                     ? 'ring-red-500/80 group-hover:ring-red-400'
                     : 'ring-teal-400/80 group-hover:ring-teal-300'
@@ -538,10 +539,11 @@ export default function VerticalCr80Card({
                   {activeQrTarget ? (
                     <QRCodeSVG
                       value={activeQrTarget}
-                      size={64}
+                      size={66}
                       bgColor="#ffffff"
-                      fgColor="#040914"
+                      fgColor="#000000"
                       level="M"
+                      style={{ shapeRendering: 'crispEdges' }}
                     />
                   ) : (
                     <div className="w-full h-full bg-slate-800 flex flex-col items-center justify-center text-center p-1">
@@ -573,7 +575,8 @@ export default function VerticalCr80Card({
                         ? 'bg-red-600/30 text-red-200 border border-red-500/50 group-hover:bg-red-500 group-hover:text-slate-950'
                         : 'bg-teal-500/25 text-teal-200 border border-teal-500/50 group-hover:bg-teal-400 group-hover:text-slate-950'
                     }`}>
-                      {t.enlargeQr} 🔍
+                      {t.enlargeQr}
+                      <Maximize2 className="w-3 h-3 inline ml-1" />
                     </span>
                     <span className="text-[9px] text-slate-400 font-mono-code">{t.scanPrompt}</span>
                   </div>

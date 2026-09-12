@@ -1,3 +1,5 @@
+import { X, Share2 } from 'lucide-react';
+
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,22 +22,16 @@ export default function ShareModal({ isOpen, onClose, url, onCopy }: ShareModalP
       >
         <div className="flex items-center justify-between pb-2 border-b border-slate-800">
           <div className="flex items-center gap-2 text-teal-400 font-display font-bold text-sm">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="18" cy="5" r="3" />
-              <circle cx="6" cy="12" r="3" />
-              <circle cx="18" cy="19" r="3" />
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-            </svg>
+            <Share2 className="w-4 h-4" />
             <span>프로필 링크 공유</span>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1"
+            className="text-slate-400 hover:text-white p-1 cursor-pointer"
             aria-label="닫기"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
 

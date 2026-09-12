@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { Settings, X, Image as ImageIcon } from 'lucide-react';
 import { StudentData } from '../types';
 
 interface ProfileEditModalProps {
@@ -10,7 +11,8 @@ interface ProfileEditModalProps {
 
 // Preset photo/avatar hotlinks for easy one-click testing
 const PRESET_AVATARS = [
-  { label: '기본 엠블럼', url: '' },
+  { label: '기본 엠블럼 (기본값)', url: '' },
+  { label: 'AI 로봇 파일럿 그래픽', url: '/robot_pilot_avatar.jpg' },
   {
     label: '로봇 파일럿 1',
     url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=240&auto=format&fit=crop&q=80',
@@ -50,7 +52,7 @@ export default function ProfileEditModal({ isOpen, onClose, student, onSave }: P
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-3 border-b border-teal-500/20">
           <div className="flex items-center gap-2 text-teal-400 font-display font-bold text-base">
-            <span className="text-lg">⚙</span>
+            <Settings className="w-5 h-5 text-teal-400" />
             <span>프로필 정보 & 이미지 핫링크 설정</span>
           </div>
           <button
@@ -59,7 +61,7 @@ export default function ProfileEditModal({ isOpen, onClose, student, onSave }: P
             className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition"
             aria-label="닫기"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -68,7 +70,7 @@ export default function ProfileEditModal({ isOpen, onClose, student, onSave }: P
           <div className="p-3.5 rounded-xl bg-slate-900/90 border border-teal-500/30 space-y-2">
             <div className="flex items-center justify-between">
               <label htmlFor="avatar-url-input" className="font-tech text-teal-300 font-bold uppercase flex items-center gap-1.5">
-                <span>🖼</span>
+                <ImageIcon className="w-4 h-4 text-teal-300" />
                 <span>프로필 사진 핫링크 URL (Hotlinked Image)</span>
               </label>
               <span className="text-[10px] text-teal-400/80 font-mono-code">HTML 직접 연동</span>

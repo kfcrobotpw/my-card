@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import { Settings, X } from 'lucide-react';
 import VerticalCr80Card from './components/VerticalCr80Card';
 import AdminPage from './components/AdminPage';
 import Toast from './components/Toast';
@@ -29,7 +30,13 @@ export default function App() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...DEFAULT_STUDENT_DATA, ...JSON.parse(saved) };
+        const parsed = JSON.parse(saved);
+        const avatarUrl = parsed.avatarUrl === '/robot_pilot_avatar.jpg' ? '' : (parsed.avatarUrl ?? '');
+        return {
+          ...DEFAULT_STUDENT_DATA,
+          ...parsed,
+          avatarUrl,
+        };
       }
     } catch {
       // Ignore localStorage errors
@@ -325,10 +332,10 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => navigateTo('/admin')}
-                className="px-3 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold font-mono-code text-[11px] transition shadow-sm flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold font-mono-code text-[11px] transition shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
                 <span>{t.editButton}</span>
-                <span>⚙</span>
+                <Settings className="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
@@ -389,9 +396,10 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setShowCommandPrompt(false)}
-                className="text-xs text-slate-400 hover:text-white cursor-pointer"
+                className="text-xs text-slate-400 hover:text-white cursor-pointer flex items-center gap-1"
               >
-                ✕ {t.close} (Esc)
+                <X className="w-3.5 h-3.5" />
+                <span>{t.close} (Esc)</span>
               </button>
             </div>
             <form onSubmit={handleCommandSubmit} className="flex items-center gap-2">

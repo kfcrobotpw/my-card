@@ -1,4 +1,5 @@
 import { FormEvent, useState, useEffect } from 'react';
+import { Lock, AlertTriangle, Image as ImageIcon, User, Building2, Link2, Check, Save } from 'lucide-react';
 import { ADMIN_PASSWORD, DEFAULT_STUDENT_DATA, Language, SESSION_AUTH_KEY, StudentData } from '../types';
 import VerticalCr80Card from './VerticalCr80Card';
 import LanguageToggle from './LanguageToggle';
@@ -12,7 +13,8 @@ interface AdminPageProps {
 }
 
 const PRESET_AVATARS = [
-  { label: '기본 로봇 그래픽', url: '' },
+  { label: '기본 로봇 그래픽 (기본값)', url: '' },
+  { label: 'AI 로봇 파일럿 그래픽', url: '/robot_pilot_avatar.jpg' },
   {
     label: '로봇 파일럿 1',
     url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=240&auto=format&fit=crop&q=80',
@@ -113,8 +115,8 @@ export default function AdminPage({
         <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-[#081120]/90 backdrop-blur-xl border border-teal-500/30 shadow-[0_0_50px_rgba(0,229,192,0.12)] relative">
           {/* Header icon badge */}
           <div className="flex flex-col items-center text-center mb-6">
-            <div className="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-400/40 flex items-center justify-center text-teal-300 text-2xl shadow-lg glow-teal mb-3">
-              🔒
+            <div className="w-14 h-14 rounded-2xl bg-teal-500/10 border border-teal-400/40 flex items-center justify-center text-teal-300 shadow-lg glow-teal mb-3">
+              <Lock className="w-7 h-7 text-teal-300" />
             </div>
             <div className="text-[10px] font-mono-code text-teal-400 font-semibold tracking-widest uppercase mb-1">
               SECURITY CLEARANCE // CLASS-A
@@ -168,8 +170,8 @@ export default function AdminPage({
               </div>
 
               {passwordError && (
-                <p className="mt-2 text-xs font-mono-code text-rose-400 flex items-center gap-1">
-                  <span>⚠</span>
+                <p className="mt-2 text-xs font-mono-code text-rose-400 flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
                   <span>{passwordError}</span>
                 </p>
               )}
@@ -234,7 +236,7 @@ export default function AdminPage({
             onClick={handleLogout}
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-rose-300 border border-slate-800 text-xs font-medium transition cursor-pointer"
           >
-            <span>🔒</span>
+            <Lock className="w-3.5 h-3.5 text-slate-400" />
             <span>로그아웃</span>
           </button>
 
@@ -256,7 +258,7 @@ export default function AdminPage({
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-teal-500/30 space-y-3">
             <div className="flex items-center justify-between">
               <label htmlFor="avatar-url-input" className="text-sm font-bold text-teal-300 flex items-center gap-2">
-                <span>🖼</span>
+                <ImageIcon className="w-4 h-4 text-teal-400" />
                 <span>프로필 사진 핫링크 URL (Avatar Hotlink)</span>
               </label>
               <span className="text-[10px] text-teal-400/80 font-mono-code">HTTPS 이미지 URL</span>
@@ -307,7 +309,7 @@ export default function AdminPage({
           {/* Section: Name & Identity */}
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
             <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-              <span>👤</span>
+              <User className="w-4 h-4 text-teal-400" />
               <span>파일럿 인적 사항 (Identity)</span>
             </h2>
 
@@ -387,7 +389,7 @@ export default function AdminPage({
           {/* Section: Affiliation & Team */}
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
             <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-              <span>🏢</span>
+              <Building2 className="w-4 h-4 text-teal-400" />
               <span>소속 및 팀 정보 (Affiliation & Team)</span>
             </h2>
 
@@ -452,7 +454,7 @@ export default function AdminPage({
           {/* Section: Links & QR Target */}
           <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
             <h2 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-              <span>🔗</span>
+              <Link2 className="w-4 h-4 text-teal-400" />
               <span>온라인 링크 & 뒷면 QR 연동</span>
             </h2>
 
@@ -500,7 +502,17 @@ export default function AdminPage({
               type="submit"
               className="w-full sm:flex-1 py-3 px-6 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>{savedSuccess ? '✓ 저장 완료!' : '💾 저장하고 메인 카드로 이동'}</span>
+              {savedSuccess ? (
+                <>
+                  <Check className="w-4 h-4 text-slate-950" />
+                  <span>저장 완료!</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4 text-slate-950" />
+                  <span>저장하고 메인 카드로 이동</span>
+                </>
+              )}
             </button>
 
             <button

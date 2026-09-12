@@ -1,4 +1,5 @@
 import { QRCodeSVG } from 'qrcode.react';
+import { Bot, CheckCircle2 } from 'lucide-react';
 import { StudentData } from '../types';
 
 interface VerticalCyberCardProps {
@@ -94,7 +95,7 @@ export default function VerticalCyberCard({ student, isFlipped, onFlip, showFall
               </div>
               <div className="text-slate-200 font-bold tracking-wide text-base">{student.org}</div>
               <div className="text-teal-400 font-display text-sm tracking-wider flex items-center gap-1.5">
-                <span>⚛</span>
+                <Bot className="w-3.5 h-3.5 text-teal-400" />
                 <span>{student.team}</span>
               </div>
             </div>
@@ -118,7 +119,7 @@ export default function VerticalCyberCard({ student, isFlipped, onFlip, showFall
             {/* Hotlinked Photo or Photo Status Slot */}
             <div className="mt-3 pt-2.5 border-t border-slate-700/40 flex items-center justify-between text-[11px] text-slate-400 font-mono-code">
               <span className="flex items-center gap-1.5 text-slate-300">
-                <span className="text-teal-400 font-bold">☑</span> IDENTITY VERIFIED
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-400" /> IDENTITY VERIFIED
               </span>
               {student.avatarUrl ? (
                 <span className="text-teal-300 text-[10px] flex items-center gap-1">
@@ -247,16 +248,17 @@ export default function VerticalCyberCard({ student, isFlipped, onFlip, showFall
           </div>
 
           {/* Bottom Back: QR Area */}
-          <div className="pt-3 border-t border-teal-500/20 flex items-center justify-between relative z-10" onClick={(e) => e.stopPropagation()}>
+          <div className="pt-3 border-t border-teal-500/20 flex items-center justify-between relative z-20" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-3">
-              <div className="p-1 bg-white rounded-lg shadow-md shrink-0 w-[64px] h-[64px] flex items-center justify-center relative overflow-hidden">
+              <div className="p-1 bg-white qr-contrast-box rounded-lg shadow-md shrink-0 w-[66px] h-[66px] flex items-center justify-center relative overflow-hidden">
                 {activeQrTarget ? (
                   <QRCodeSVG
                     value={activeQrTarget}
-                    size={56}
+                    size={58}
                     bgColor="#ffffff"
-                    fgColor="#060d1a"
+                    fgColor="#000000"
                     level="M"
+                    style={{ shapeRendering: 'crispEdges' }}
                   />
                 ) : (
                   <div className="w-full h-full bg-slate-800 flex flex-col items-center justify-center text-center p-1">

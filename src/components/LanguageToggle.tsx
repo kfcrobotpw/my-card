@@ -1,3 +1,4 @@
+import { Globe } from 'lucide-react';
 import { Language } from '../types';
 
 interface LanguageToggleProps {
@@ -18,7 +19,7 @@ export default function LanguageToggle({
       className={`flex items-center gap-1 bg-[#070f1e]/95 backdrop-blur-md p-1 rounded-full border border-teal-500/40 shadow-[0_0_20px_rgba(0,229,192,0.12)] transition-all ${className}`}
     >
       <div className="pl-2 pr-1 text-teal-400 flex items-center gap-1 select-none pointer-events-none">
-        <span className="text-xs">🌐</span>
+        <Globe className="w-3.5 h-3.5 text-teal-400" />
         <span className="text-[10px] font-mono-code font-bold uppercase tracking-wider text-teal-300 hidden xs:inline">
           LANG
         </span>

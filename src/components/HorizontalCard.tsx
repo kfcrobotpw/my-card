@@ -203,15 +203,16 @@ export default function HorizontalCard({ student, isFlipped, onFlip, showFallbac
 
           {/* Right Side: QR Code Plate */}
           <div className="flex flex-col items-center justify-center z-10 shrink-0">
-            <div className="bg-white p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col items-center border border-white/80 transition-transform duration-200 hover:scale-105">
+            <div className="bg-white qr-contrast-box p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col items-center border border-white/80 transition-transform duration-200 hover:scale-105">
               {activeQrTarget ? (
                 <div className="p-1">
                   <QRCodeSVG
                     value={activeQrTarget}
                     size={110}
                     bgColor="#ffffff"
-                    fgColor="#071221"
+                    fgColor="#000000"
                     level="M"
+                    style={{ shapeRendering: 'crispEdges' }}
                     className="w-24 h-24 sm:w-32 sm:h-32"
                   />
                 </div>
