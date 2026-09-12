@@ -211,11 +211,6 @@ export default function HorizontalCard({
               </div>
             </div>
           </div>
-
-          {/* Touch to flip hint indicator */}
-          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[8px] sm:text-[9px] font-mono-code text-teal-300/50 uppercase tracking-widest pointer-events-none">
-            {t.flipPrompt}
-          </div>
         </article>
 
         {/* ==================================================== */}

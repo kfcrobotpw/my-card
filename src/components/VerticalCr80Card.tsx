@@ -286,15 +286,11 @@ export default function VerticalCr80Card({
                   </span>
                 </div>
 
-                {/* Flip indicator */}
+                {/* Status indicator */}
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-1.5 text-[10px] font-mono-code text-teal-400">
                     <span className={`w-1.5 h-1.5 rounded-full ${isAdminLoggedIn ? 'bg-[#00e5c0] pulse-dot shadow-[0_0_8px_#00e5c0]' : 'bg-[#00e5c0] pulse-dot'}`} />
                     <span>{isAdminLoggedIn ? t.active : t.ready}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-[11px] font-mono-code bg-teal-500/15 px-2.5 py-1 rounded-md border border-teal-400/40 text-teal-300 transition shadow-sm hover:bg-teal-500/25">
-                    <span>{t.backFace}</span>
-                    <span className="text-xs">↻</span>
                   </div>
                 </div>
               </div>
@@ -584,16 +580,6 @@ export default function VerticalCr80Card({
                   </div>
                 </div>
               </div>
-
-              <button
-                type="button"
-                onClick={onFlip}
-                className="text-slate-400 hover:text-teal-400 p-2 text-xs font-mono-code flex flex-col items-center group transition shrink-0 ml-1 rounded-xl hover:bg-slate-800/60"
-                title={lang === 'en' ? 'Return to front face' : '앞면으로 돌아가기'}
-              >
-                <span className="text-sm mb-0.5 group-hover:-rotate-45 transition-transform">↺</span>
-                <span className="text-[10px]">{t.frontFace}</span>
-              </button>
             </div>
           </section>
         </div>
